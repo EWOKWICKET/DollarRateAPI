@@ -1,0 +1,24 @@
+{
+  "name": "DollarRateAPI",
+  "version": "1.0.0",
+  "description": "Genesis case task",
+  "main": "server.js",
+  "repository": "https://github.com/EWOKWICKET/DollarRateAPI.git",
+  "author": "Hushchin Ivan",
+  "license": "MIT",
+
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-validator": "^7.0.1",
+    "nodemon": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "types/express",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.5"
+  },
+  "scripts": {
+    "watch": "tsc -w",
+    "dev": "nodemon ./out/server/server.js"
+  }
+}
