@@ -1,0 +1,2 @@
+# DollarRateAPI
+Genesis case task
