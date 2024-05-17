@@ -6,14 +6,15 @@
   "repository": "https://github.com/EWOKWICKET/DollarRateAPI.git",
   "author": "Hushchin Ivan",
   "license": "MIT",
-
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
     "express-validator": "^7.0.1",
+    "mysql2": "^3.9.7",
     "nodemon": "^3.1.0"
   },
   "devDependencies": {
-    "@types/express": "types/express",
+    "@types/express": "^4.17.21",
     "ts-node": "^10.9.2",
     "typescript": "^5.4.5"
   },

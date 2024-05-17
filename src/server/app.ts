@@ -1,22 +1,11 @@
-import express, { Request, Response } from 'express';
-import { HTTP_STATUSES } from '../Utils/utils';
+import express from 'express';
+import { apiRouter } from '../routes/api';
 
 
 export const app = express();
 
+//Middleware to parse the body
+app.use(express.json());
 
-app.get('/rate', (req : Request, res : Response) => {
-    res.send('rate')
-})
-
-app.get('/subscribe', (req : Request, res : Response) => {
-    res.send('subscribe')
-})
-
-app.get('/sendEmails', (req : Request, res : Response) => {
-    res.send('sendEmails')
-})
-
-app.use((req: Request, res : Response) => {
-    res.status(HTTP_STATUSES.NOT_FOUND_404).send('Not found');
-})
+// "/api" route
+app.use('/api', apiRouter);
