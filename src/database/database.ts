@@ -3,13 +3,13 @@ import path from 'path'
 import { User } from './utils/user';
 
 import dotenv from 'dotenv';
-dotenv.config({ path: path.resolve('./out/database/.env') });
+dotenv.config({ path: path.resolve('./src/database/utils/.env') });
 
 
 /**
  * Connects to db .env vars are in 'out/database/.env'
  */
-const pool = mysql.createPool({
+export const pool = mysql.createPool({
     host: process.env.MYSQL_HOST,
     user: process.env.MYSQL_USER,
     password: process.env.MYSQL_PASSWORD,
@@ -32,4 +32,16 @@ export async function getUsers() : Promise<User[]> {
  */
 export async function addUser(email: string) {
     await pool.query(`INSERT INTO emails (email) VALUES (?)`, [email]);
+    console.log(`Email ${email} added`)
 }
+
+
+/**
+ * Deletes a user from a database
+ * @param email to subscribe
+ */
+export async function deleteUser(email: string) {
+    await pool.query(`DELETE FROM emails WHERE email=?`, [email]);
+    console.log(`Email ${email} deleted`)
+}
+

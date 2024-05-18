@@ -6,7 +6,7 @@ import { User } from "../database/utils/user";
 import rateController from "./rateController";
 
 import dotenv from 'dotenv';
-dotenv.config({ path: path.resolve('./out/database/.env') });
+dotenv.config({ path: path.resolve('./src/database/utils/.env') });
 
 class EmailController {
     private transporter: Transporter;

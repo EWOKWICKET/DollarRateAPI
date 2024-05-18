@@ -27,10 +27,10 @@ class RateController {
      */
     private async _fetchRate() {
         try {
-            const response = await fetch('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json');
-            const data = await response.json();
-            this.rate = data[0].rate;
-            // RateController.rate = 10;
+            // const response = await fetch('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json');
+            // const data = await response.json();
+            // this.rate = data[0].rate;
+            this.rate = 10;
             console.log(this.rate)
         } catch (error) {
             console.log('Error occured while fetching rate:');
@@ -45,7 +45,7 @@ class RateController {
      * @param res rate 
      */
     public async sendRate(req: Request, res: Response<number | undefined>) {
-        res.json(await this.rate)
+        res.json(await this.rate);
     }
 
     /**

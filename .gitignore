@@ -1,2 +1,2 @@
 /node_modules
-/out/database/.env
+/src/database/utils/.env

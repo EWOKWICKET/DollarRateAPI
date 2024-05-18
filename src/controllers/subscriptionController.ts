@@ -18,6 +18,7 @@ class SubscriptionController {
         const errors = checkIfValid(req);
         if (errors) {
             res.status(HTTP_STATUSES.BAD_REQUEST_400).json("Invalid email address");
+            return;
         }
 
         try {
