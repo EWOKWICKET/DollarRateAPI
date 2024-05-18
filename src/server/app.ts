@@ -1,11 +1,31 @@
 import express from 'express';
-import { apiRouter } from '../routes/api';
+import apiRoute from '../routes/apiRoute';
 
 
-export const app = express();
+class App {
+    private app: express.Application;
 
-//Middleware to parse the body
-app.use(express.json());
+    public constructor() {
+        this.app = express();
+        this.useMiddlewares();
+        this.useRoutes();
+    }
 
-// "/api" route
-app.use('/api', apiRouter);
+    private useMiddlewares() {
+        //Middleware to parse the body
+        this.app.use(express.json());
+    }
+
+    private useRoutes() {
+        // "/api" route
+        this.app.use('/api', apiRoute.getRouter());
+    }
+
+    public listen(PORT: number) {
+        this.app.listen(PORT, () => {
+            console.log(`Listening to requests on port ${PORT}`);
+        })
+    }
+}
+
+export default App;

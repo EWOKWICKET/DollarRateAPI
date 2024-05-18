@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.addUser = void 0;
+exports.addUser = exports.getUsers = void 0;
 const mysql2_1 = __importDefault(require("mysql2"));
 const path_1 = __importDefault(require("path"));
 const dotenv_1 = __importDefault(require("dotenv"));
@@ -26,6 +26,22 @@ const pool = mysql2_1.default.createPool({
     password: process.env.MYSQL_PASSWORD,
     database: process.env.MYSQL_DATABASE
 }).promise();
+/**
+ * Gets all fields of a table
+ * @returns Array of user's fields
+ */
+function getUsers() {
+    return __awaiter(this, void 0, void 0, function* () {
+        const result = yield pool.query("SELECT * FROM emails");
+        const users = result[0];
+        return users;
+    });
+}
+exports.getUsers = getUsers;
+/**
+ * Adds a user to a database
+ * @param email to subscribe
+ */
 function addUser(email) {
     return __awaiter(this, void 0, void 0, function* () {
         yield pool.query(`INSERT INTO emails (email) VALUES (?)`, [email]);
