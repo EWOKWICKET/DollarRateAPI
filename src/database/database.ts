@@ -1,13 +1,10 @@
-import mysql, { FieldPacket, RowDataPacket } from 'mysql2';
+import mysql, { FieldPacket } from 'mysql2';
 import path from 'path'
+import { User } from './utils/user';
 
 import dotenv from 'dotenv';
 dotenv.config({ path: path.resolve('./out/database/.env') });
 
-export interface User extends RowDataPacket {
-    id: number,
-    email: string
-}
 
 /**
  * Connects to db .env vars are in 'out/database/.env'

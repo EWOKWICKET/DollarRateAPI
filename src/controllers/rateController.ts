@@ -1,44 +1,58 @@
 import { Request, Response } from "express";
+import apiRoute from "../routes/apiRoute";
 
 class RateController {
-    private static rate: number | undefined = undefined;
+    private rate: number = 0;
 
     public constructor() {
-        this.updateRate();
-        this.getRate = this.getRate.bind(this);
+        this._updateRate();
+        this.sendRate = this.sendRate.bind(this);
     }
 
     /**
      * Updates rate once a day since the server started
      */
-    private async updateRate() {
-        this.fetchRate();
+    private async _updateRate() {
+        await this._fetchRate();
+        apiRoute.sendEmails();
 
         setInterval(async () => {
-            this.fetchRate();
+            await this._fetchRate();
+            apiRoute.sendEmails();
         }, 86400000);
     };
 
     /**
      * Gets rate from NBU API. If error occures, it tries again 10 mins later
      */
-    private async fetchRate() {
+    private async _fetchRate() {
         try {
-            // const response = await fetch('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json');
-            // const data = await response.json();
-            // RateController.rate = data[0].rate;
-            RateController.rate = 10;
-            console.log(RateController.rate)
+            const response = await fetch('https://bank.gov.ua/NBUStatService/v1/statdirectory/exchange?valcode=USD&json');
+            const data = await response.json();
+            this.rate = data[0].rate;
+            // RateController.rate = 10;
+            console.log(this.rate)
         } catch (error) {
             console.log('Error occured while fetching rate:');
             setTimeout(() => {
-                this.fetchRate();
+                this._fetchRate();
             }, 600000)
         }
     }
 
-    public getRate(req: Request, res: Response<number | undefined>) {
-        res.json(RateController.rate)
+    /**
+     * @param req 
+     * @param res rate 
+     */
+    public async sendRate(req: Request, res: Response<number | undefined>) {
+        res.json(await this.rate)
+    }
+
+    /**
+     * @returns rate
+     */
+    public async getRate() : Promise<number> {
+        return this.rate;
     }
 }
 

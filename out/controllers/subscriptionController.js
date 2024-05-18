@@ -16,6 +16,10 @@ class SubscriptionController {
     constructor() {
         this.subscribe = this.subscribe.bind(this);
     }
+    /**
+     * @param req with email in body
+     * @param res result of subscription
+     */
     subscribe(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const errors = (0, validation_1.checkIfValid)(req);

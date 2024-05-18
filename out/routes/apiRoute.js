@@ -21,26 +21,31 @@ class apiRoute {
     constructor() {
         this.apiRouter = (0, express_1.Router)();
         // this.getRouter = this.getRouter.bind(this)
-        this.createRoutes();
-        this.configEmailSending();
+        this._createRoutes();
     }
-    createRoutes() {
+    _createRoutes() {
         return __awaiter(this, void 0, void 0, function* () {
             /**
              * Shows dollar rate
              */
-            this.apiRouter.get('/rate', rateController_1.default.getRate);
+            this.apiRouter.get('/rate', rateController_1.default.sendRate);
             /**
              * Subscribe email and add to a database, if there is no one
              */
             this.apiRouter.post('/subscribe', validation_1.emailValidation, subscriptionController_1.default.subscribe);
         });
     }
-    configEmailSending() {
+    /**
+     * Used after rate was fethed to send emails
+     */
+    sendEmails() {
         return __awaiter(this, void 0, void 0, function* () {
             emailController_1.default.sendEmails();
         });
     }
+    /**
+     * @returns api route router
+     */
     getRouter() {
         return this.apiRouter;
     }

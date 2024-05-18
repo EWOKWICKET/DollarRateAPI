@@ -8,14 +8,14 @@ const apiRoute_1 = __importDefault(require("../routes/apiRoute"));
 class App {
     constructor() {
         this.app = (0, express_1.default)();
-        this.useMiddlewares();
-        this.useRoutes();
+        this._useMiddlewares();
+        this._useRoutes();
     }
-    useMiddlewares() {
+    _useMiddlewares() {
         //Middleware to parse the body
         this.app.use(express_1.default.json());
     }
-    useRoutes() {
+    _useRoutes() {
         // "/api" route
         this.app.use('/api', apiRoute_1.default.getRouter());
     }

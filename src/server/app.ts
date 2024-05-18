@@ -7,16 +7,16 @@ class App {
 
     public constructor() {
         this.app = express();
-        this.useMiddlewares();
-        this.useRoutes();
+        this._useMiddlewares();
+        this._useRoutes();
     }
 
-    private useMiddlewares() {
+    private _useMiddlewares() {
         //Middleware to parse the body
         this.app.use(express.json());
     }
 
-    private useRoutes() {
+    private _useRoutes() {
         // "/api" route
         this.app.use('/api', apiRoute.getRouter());
     }

@@ -11,15 +11,14 @@ class apiRoute {
     public constructor() {
         this.apiRouter = Router();
         // this.getRouter = this.getRouter.bind(this)
-        this.createRoutes();
-        this.configEmailSending();
+        this._createRoutes();
     }
 
-    private async createRoutes() {
+    private async _createRoutes() {
         /**
          * Shows dollar rate
          */
-        this.apiRouter.get('/rate', rateController.getRate);
+        this.apiRouter.get('/rate', rateController.sendRate);
 
         /**
          * Subscribe email and add to a database, if there is no one
@@ -27,10 +26,16 @@ class apiRoute {
         this.apiRouter.post('/subscribe', emailValidation, subscriptionController.subscribe);
     }
 
-    private async configEmailSending() {
+    /**
+     * Used after rate was fethed to send emails
+     */
+    public async sendEmails() {
         emailController.sendEmails();
     }
 
+    /**
+     * @returns api route router 
+     */
     public getRouter() {
         return this.apiRouter;
     }

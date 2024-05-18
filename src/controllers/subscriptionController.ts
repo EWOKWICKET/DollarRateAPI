@@ -10,6 +10,10 @@ class SubscriptionController {
         this.subscribe = this.subscribe.bind(this);
     }
 
+    /**
+     * @param req with email in body 
+     * @param res result of subscription
+     */
     public async subscribe(req: RequestWithBody<{ email: string }>, res: Response) {
         const errors = checkIfValid(req);
         if (errors) {
