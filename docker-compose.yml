@@ -1,0 +1,41 @@
+version: "3.8"
+name: "dollar_rate_api"
+
+services:
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: MyRootPass
+      MYSQL_DATABASE: dollarrateapi
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_HOST: '%'
+    expose:
+      - "3306"
+    ports:
+      - 3307:3306
+    networks:
+      - app
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  dollar_rate_api:
+    container_name: dollar_rate_api
+    build: .
+    command: bash -c 'while !</dev/tcp/mysql/3306; do sleep 1; done; yarn start'
+    ports:
+      - 3000:3000
+    depends_on:
+      - mysql
+    networks:
+      - app
+
+volumes:
+  mysql_data:
+    driver: local 
+
+networks:
+  app:
+    driver: bridge

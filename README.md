@@ -1,3 +1,38 @@
 # DollarRateAPI
+
 ## Genesis case task
-#### Written on TypeScript, then compiled to JavaScript and started
+
+## Technologies
+- TypeScript
+- Express.js
+- Jest / Supertest
+
+## Project installation
+
+```bash
+git clone https://github.com/EWOKWICKET/DollarRateAPI.git
+```
+
+### Dependencies
+
+```bash
+yarn install
+```
+
+### Environment
+#### Create .env file in root directory
+```bash
+PORT=3000
+```
+
+## Run
+
+```bash
+yarn start
+```
+
+### Test
+
+```bash
+yarn test
+```

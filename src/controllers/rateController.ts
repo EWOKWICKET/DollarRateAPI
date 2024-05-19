@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import apiRoute from "../routes/apiRoute";
+
 
 class RateController {
     private rate: number = 0;
@@ -14,11 +14,9 @@ class RateController {
      */
     private async _updateRate() {
         await this._fetchRate();
-        apiRoute.sendEmails();
 
         setInterval(async () => {
             await this._fetchRate();
-            apiRoute.sendEmails();
         }, 86400000);
     };
 
@@ -31,7 +29,7 @@ class RateController {
             // const data = await response.json();
             // this.rate = data[0].rate;
             this.rate = 10;
-            console.log(this.rate)
+            console.log(this.rate);
         } catch (error) {
             console.log('Error occured while fetching rate:');
             setTimeout(() => {
@@ -45,7 +43,7 @@ class RateController {
      * @param res rate 
      */
     public async sendRate(req: Request, res: Response<number | undefined>) {
-        res.json(await this.rate);
+        res.json(this.rate);
     }
 
     /**

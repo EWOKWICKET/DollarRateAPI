@@ -1,6 +1,8 @@
 import express from 'express';
 import apiRoute from '../routes/apiRoute';
 
+import dotenv from 'dotenv';
+dotenv.config();
 
 class App {
     private app: express.Application;
@@ -21,9 +23,11 @@ class App {
         this.app.use('/api', apiRoute.getRouter());
     }
 
-    public listen(PORT: number) {
+    public listen() {
+        const PORT = process.env.PORT || 3000;
         this.app.listen(PORT, () => {
             console.log(`Listening to requests on port ${PORT}`);
+            apiRoute.sendEmails();
         })
     }
 }

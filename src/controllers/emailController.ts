@@ -1,21 +1,19 @@
 import nodemailer, { Transporter } from "nodemailer";
-import path from "path";
 import { google } from 'googleapis';
-import { getUsers } from "../database/database";
+import database from "../database/database";
 import { User } from "../database/utils/user";
 import rateController from "./rateController";
 
 import dotenv from 'dotenv';
-dotenv.config({ path: path.resolve('./src/database/utils/.env') });
+dotenv.config();
+
 
 class EmailController {
     private transporter: Transporter;
     private OAuth2_client: any;
-    private users: Promise<User[]>
+    private users: User[] = [];
 
     public constructor() {
-        this.users = getUsers();
-
         this._configure();
 
         const accessToken = this.OAuth2_client.getAccessToken();
@@ -24,7 +22,7 @@ class EmailController {
             service: 'gmail',
             auth: {
                 type: "OAuth2",
-                user: process.env.EMAIL_USER,
+                user: 'ihushchin@gmail.com',
                 clientId: process.env.CLIENT_ID,
                 clientSecret: process.env.CLIENT_SECRET,
                 refreshToken: process.env.REFRESH_TOKEN,
@@ -51,7 +49,6 @@ class EmailController {
         this._sendToEach();
 
         setInterval(async () => {
-            await getUsers();
             this._sendToEach();
         }, 86400000);
     };
@@ -60,8 +57,10 @@ class EmailController {
      * Sends emails to each user
      */
     private async _sendToEach() {
-        if ((await this.users).length > 0) {
-            (await this.users).forEach((user) => {
+        this.users = await database.getUsers();
+        
+        if (this.users.length > 0) {
+            this.users.forEach((user) => {
                 this._sendEmail(user.email);
             });
         }
@@ -76,7 +75,7 @@ class EmailController {
             if (err) {
                 console.error('Error while sending messages')
             } else {
-                console.log(result)
+                console.log(`Email sent to ${result.envelope.to}`)
             }
         });
     };
@@ -86,9 +85,8 @@ class EmailController {
      * @returns returns mail send options
      */
     private async _getMailOptions(email: string) {
-
         return {
-            from: `IVAN <${process.env.EMAIL_USER}>`,
+            from: `IVAN <ihushchin@gmail.com>`,
             to: email,
             subject: 'Dollar rate',
             text: `Dollar rate is ${await rateController.getRate()} UAH`

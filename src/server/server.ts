@@ -1,6 +1,6 @@
-import App from "./app";
+import database from "../database/database";
 
-const PORT : number = 3000;
-const app = new App();
 
-app.listen(PORT);
+const PORT: number = 3000;
+
+const db = database;
