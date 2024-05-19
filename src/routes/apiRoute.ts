@@ -27,7 +27,7 @@ class apiRoute {
     }
 
     /**
-     * Used after rate was fethed to send emails
+     * Used after app was started
      */
     public async sendEmails() {
         emailController.sendEmails();

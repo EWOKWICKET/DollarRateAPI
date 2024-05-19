@@ -25,6 +25,9 @@ class Database {
         this.checkTable();
     }
 
+    /**
+     * Checks if table exist, creats it if not and starts the app
+     */
     async checkTable() {
         const query = `SHOW TABLES`;
         const result: [any[], FieldPacket[]] = await this.pool.query(query);
